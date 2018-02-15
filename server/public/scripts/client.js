@@ -1,17 +1,18 @@
 $( document ).ready( function(){
-  $('#viewKoalas').on('click', '.deleteKoala', koalaDeleter)
-  $('#viewKoalas').on('click', '.transfer', koalaTransfer)
-  getKoalas();
+  $('#viewKoalas').on('click', '.deleteKoala', koalaDeleter);
+  $('#viewKoalas').on('click', '.transfer', koalaTransfer);
+  $('#changeDisplay').on('click', displayChange);
+  displayChange();
   $( '#addButton' ).on( 'click', function(event){
     event.preventDefault();
     addKoala();
   });
 }); // end doc ready
 
-function getKoalas(){
-  console.log('in getKoalas');
+function getAllKoalas(){
+  console.log('in getAllKoalas');
   $.ajax({
-    url: '/koalas',
+    url: '/koalas/all',
     type: 'GET',
   }).done(function(data){
     console.log('GET:', data);
@@ -22,6 +23,32 @@ function getKoalas(){
   // display on DOM with buttons that allow edit of each
 } // end getKoalas
 
+function getTransferables(){
+  console.log('in getTransferables');
+  $.ajax({
+    url: '/koalas/transferables',
+    type: 'GET',
+  }).done(function(data){
+    console.log('GET:', data);
+    koalaDisplay(data);
+  }).fail(function(error){
+    console.log(error)
+  });
+}
+
+function getNonTransferables(){
+  console.log('in getNonTransferables');
+  $.ajax({
+    url: '/koalas/nontransferables',
+    type: 'GET',
+  }).done(function(data){
+    console.log('GET:', data);
+    koalaDisplay(data);
+  }).fail(function(error){
+    console.log(error)
+  });
+}
+
 function saveKoala(newKoala){
   console.log('in saveKoala', newKoala);
   $.ajax({
@@ -30,7 +57,7 @@ function saveKoala(newKoala){
     data: newKoala
   }).done(function(data){
     console.log('got some koalas:', data);
-    getKoalas();
+    displayChange();
   }).fail(function(error){
     console.log(error)
   }); //end ajax
@@ -80,7 +107,7 @@ function koalaDeleter(){
     data: {'id': id}
   }).done(function(data){
     console.log('got some koalas:', data);
-    getKoalas();
+    displayChange();
   }).fail(function(error){
     console.log(error)
   }); //end ajax
@@ -103,8 +130,18 @@ function koalaTransfer(){
     data: {'id': id}
   }).done(function(data){
     console.log('got some koalas:', data);
-    getKoalas();
+    displayChange();
   }).fail(function(error){
     console.log(error)
   }); //end ajax
+}
+
+function displayChange(){
+  if($('#displaySelect').val()=='all'){
+    getAllKoalas();
+  } else if($('#displaySelect').val()=='transferable'){
+    getTransferables();
+  } else if($('#displaySelect').val()=='non-transferable'){
+    getNonTransferables();
+  }
 }

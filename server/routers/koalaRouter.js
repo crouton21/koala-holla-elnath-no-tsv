@@ -18,13 +18,33 @@ router.post('/', function(req, res){
     })
 });
 
-router.get('/', function(req, res){
+router.get('/all', function(req, res){
     const sqlText = 'select * from koalas order by id;';
     pool.query(sqlText)
     .then(function(result){
         res.send(result.rows);
     }).catch(function(error){
-        response.sendStatus(500);
+        res.sendStatus(500);
+    })
+})
+
+router.get('/transferables', function(req, res){
+    const sqlText = `select * from koalas where transfer = 'true' order by id;`;
+    pool.query(sqlText)
+    .then(function(result){
+        res.send(result.rows);
+    }).catch(function(error){
+        res.sendStatus(500);
+    })
+})
+
+router.get('/nontransferables', function(req, res){
+    const sqlText = `select * from koalas where transfer = 'false' order by id;`;
+    pool.query(sqlText)
+    .then(function(result){
+        res.send(result.rows);
+    }).catch(function(error){
+        res.sendStatus(500);
     })
 })
 
