@@ -5,7 +5,7 @@
     <title>Koalla Holla</title>
     <script src="vendors/jquery-3.0.0.min.js" charset="utf-8"></script>
     <script src="scripts/client.js" charset="utf-8"></script>
-    <link rel="stylesheet" href="views/styles.css">
+    <link rel="stylesheet" href="styles/style.css">
   </head>
   <body>
     <img src="images/icon.png" />
@@ -14,12 +14,14 @@
     <h2>Walla Walla, WA</h2>
     <div id="addKoala">
       <h2>Add Koala</h2>
-      <input type="text" id="nameIn" value="" placeholder="Name">
-      <input type="text" id="ageIn" value="" placeholder="Age">
-      <input type="text" id="genderIn" value="" placeholder="Gender">
-      <input type="text" id="readyForTransferIn" value="" placeholder="Transfer">
-      <input type="text" id="notesIn" value="" placeholder="Notes">
-      <button type="button" id="addButton">Add Koala</button>
+      <form>
+        <input type="text" id="nameIn" value="" placeholder="Name">
+        <input type="text" id="ageIn" value="" placeholder="Age">
+        <input type="text" id="genderIn" value="" placeholder="Gender">
+        <input type="text" id="transferIn" value="" placeholder="Transfer">
+        <input type="text" id="notesIn" value="" placeholder="Notes">
+        <button type="button" id="addButton">Add Koala</button>
+      </form> <!-- Remember prevent default -->
     </div>
     <div>
       <h2>All Koalas</h2>

@@ -10,3 +10,6 @@ app.use(express.static('server/public'));
 app.listen(port, function(){
   console.log('listening on port', port);
 });
+
+const koalaRouter = require('./routers/koalaRouter.js');
+app.use('/koalas', koalaRouter);
