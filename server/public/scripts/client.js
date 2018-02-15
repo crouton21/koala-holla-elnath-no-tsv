@@ -1,6 +1,7 @@
 $( document ).ready( function(){
   $('#viewKoalas').on('click', '.deleteKoala', koalaDeleter);
   $('#viewKoalas').on('click', '.transfer', koalaTransfer);
+  $('#viewKoalas').on('click', '.keep', koalaKeep);
   $('#changeDisplay').on('click', displayChange);
   $('#viewKoalas').on('click', '.editKoala', editKoala);
   $('#viewKoalas').on('click', '.saveKoalaNote', saveKoalaNote);
@@ -121,11 +122,11 @@ function koalaDeleter(){
 }
 
 function moveKoala(input, id){
-  if(input=='false'){
-    return `<button type="button" data-id="${id}" class="transfer">Ready to Transfer</button>`;
+  if(input == 'true'){
+    return `<button type="button" data-id="${id}" class="keep">It's a keeper</button>`;
   }
-  else{
-    return '';
+  else if(input == 'false'){
+    return `<button type="button" data-id="${id}" class="transfer">Ready to Transfer</button>`;
   }
 }
 
@@ -133,7 +134,21 @@ function koalaTransfer(){
   let id = $(this).data('id');
   $.ajax({
     type: 'put',
-    url: '/koalas',
+    url: '/koalas/transfer',
+    data: {'id': id}
+  }).done(function(data){
+    console.log('got some koalas:', data);
+    displayChange();
+  }).fail(function(error){
+    console.log(error)
+  }); //end ajax
+}
+
+function koalaKeep(){
+  let id = $(this).data('id');
+  $.ajax({
+    type: 'put',
+    url: '/koalas/keep',
     data: {'id': id}
   }).done(function(data){
     console.log('got some koalas:', data);

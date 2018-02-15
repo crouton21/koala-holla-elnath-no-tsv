@@ -61,7 +61,7 @@ router.delete('/', function(req, res){
     })
 })
 
-router.put('/', function(req, res){
+router.put('/transfer', function(req, res){
     id = req.body.id;
     const sqlText = `update koalas set transfer=True where id=${id}`;
     pool.query(sqlText)
@@ -70,6 +70,19 @@ router.put('/', function(req, res){
         res.send(200);
     }).catch(function(error){
         console.log('Error, koala not transfered:', error);
+        res.sendStatus(500);
+    })
+})
+
+router.put('/keep', function(req, res){
+    id = req.body.id;
+    const sqlText = `update koalas set transfer=False where id=${id}`;
+    pool.query(sqlText)
+    .then(function(result){
+        console.log('Koala kept', result);
+        res.send(200);
+    }).catch(function(error){
+        console.log('Error, koala not kept:', error);
         res.sendStatus(500);
     })
 })
