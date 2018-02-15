@@ -97,6 +97,10 @@ function koalaDisplay(koalaArray){
   $('td').css("color", "#0E1828");
   $('tr:odd').css("background-color", "#DCDCDE");
   $('tr:even').css("background-color", "#A4A7AB");
+
+  $('#nameIn').val('');
+  $('#ageIn').val('');
+  $('#notesIn').val('');
 }
 
 function koalaDeleter(){
