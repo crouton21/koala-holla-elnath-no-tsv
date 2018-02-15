@@ -13,6 +13,7 @@ function getKoalas(){
     type: 'GET',
   }).done(function(data){
     console.log('GET:', data);
+    koalaDisplay(data);
   }).fail(function(error){
     console.log(error)
   }); //end ajax
@@ -42,4 +43,19 @@ function addKoala(){
     notes: $('#notesIn').val()
   }
   saveKoala(objectToSend);
+}
+
+function koalaDisplay(koalaArray){
+  let stringToAppend = '';
+  $('#viewKoalas').empty();
+  for (koala of koalaArray){
+    stringToAppend += `<tr>`
+    stringToAppend += `<td>${koala.name}</td>`
+    stringToAppend += `<td>${koala.age}</td>`
+    stringToAppend += `<td>${koala.gender}</td>`
+    stringToAppend += `<td>${koala.transfer}</td>`
+    stringToAppend += `<td>${koala.notes}</td>`
+    stringToAppend += `</tr>`
+  }
+  $('#viewKoalas').append(stringToAppend);
 }
