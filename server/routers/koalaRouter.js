@@ -19,12 +19,38 @@ router.post('/', function(req, res){
 });
 
 router.get('/', function(req, res){
-    const sqlText = 'select * from koalas order by age;';
+    const sqlText = 'select * from koalas order by id;';
     pool.query(sqlText)
     .then(function(result){
         res.send(result.rows);
     }).catch(function(error){
         response.sendStatus(500);
+    })
+})
+
+router.delete('/', function(req, res){
+    koalaToDeleteId = req.body.id;
+    const sqlText = `delete from koalas where id=${koalaToDeleteId}`;
+    pool.query(sqlText)
+    .then(function(result){
+        console.log('"Deleted" koala', result);
+        res.send(200);
+    }).catch(function(error){
+        console.log('Error, koala not deleted:', error);
+        res.sendStatus(500);
+    })
+})
+
+router.put('/', function(req, res){
+    id = req.body.id;
+    const sqlText = `update koalas set transfer=True where id=${id}`;
+    pool.query(sqlText)
+    .then(function(result){
+        console.log('Koala transfered', result);
+        res.send(200);
+    }).catch(function(error){
+        console.log('Error, koala not transfered:', error);
+        res.sendStatus(500);
     })
 })
 
