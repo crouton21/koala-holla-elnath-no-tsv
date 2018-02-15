@@ -2,6 +2,7 @@ $( document ).ready( function(){
   $('#viewKoalas').on('click', '.deleteKoala', koalaDeleter);
   $('#viewKoalas').on('click', '.transfer', koalaTransfer);
   $('#viewKoalas').on('click', '.keep', koalaKeep);
+  $('#viewKoalas').on('click', '.ageUp', ageUp);
   $('#changeDisplay').on('click', displayChange);
   $('#viewKoalas').on('click', '.editKoala', editKoala);
   $('#viewKoalas').on('click', '.saveKoalaNote', saveKoalaNote);
@@ -84,7 +85,7 @@ function koalaDisplay(koalaArray){
   for (koala of koalaArray){
     stringToAppend += `<tr>`;
     stringToAppend += `<td>${koala.name}</td>`;
-    stringToAppend += `<td>${koala.age}</td>`;
+    stringToAppend += `<td>${koala.age}<button type="button" data-id="${koala.id}" class="ageUp">↑</button></td>`;
     stringToAppend += `<td>${koala.gender}</td>`;
     stringToAppend += `<td>${koala.transfer}</td>`;
     stringToAppend += `<td data-id="${koala.id}" id="${koala.id}">${koala.notes}<button type="button" data-note="${koala.notes}" data-id="${koala.id}" class="editKoala">Edit</button></td>`;
@@ -191,6 +192,20 @@ function saveKoalaNote(){
   }
   }).done(function(data){
     console.log('Edit this koala note:', data);
+    displayChange();
+  }).fail(function(error){
+    console.log(error)
+  }); //end ajax
+}
+
+function ageUp(){
+  let id = $(this).data('id');
+  $.ajax({
+    type: 'put',
+    url: '/koalas/age',
+    data: {'id': id}
+  }).done(function(data){
+    console.log('Happy Birthday!:', data);
     displayChange();
   }).fail(function(error){
     console.log(error)

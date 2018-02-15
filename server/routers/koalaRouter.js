@@ -101,4 +101,17 @@ router.put('/edit', function(req, res){
     })
 })
 
+router.put('/age', function(req, res){
+    id = req.body.id;
+    const sqlText = `update koalas set age=age+1 where id=${id}`;
+    pool.query(sqlText)
+    .then(function(result){
+        console.log('Koala gets older', result);
+        res.send(200);
+    }).catch(function(error){
+        console.log('Error, koala not aging this year:', error);
+        res.sendStatus(500);
+    })
+})
+
 module.exports = router;
