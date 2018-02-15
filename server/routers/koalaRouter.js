@@ -74,4 +74,18 @@ router.put('/', function(req, res){
     })
 })
 
+router.put('/edit', function(req, res){
+    note = req.body.note;
+    id = req.body.id;
+    const sqlText = `update koalas set notes=$1 where id=${id}`;
+    pool.query(sqlText, [note])
+    .then(function(result){
+        console.log('Koala re-noted', result);
+        res.send(200);
+    }).catch(function(error){
+        console.log('Error, koala not re-noted:', error);
+        res.sendStatus(500);
+    })
+})
+
 module.exports = router;

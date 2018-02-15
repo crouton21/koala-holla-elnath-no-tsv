@@ -2,6 +2,9 @@ $( document ).ready( function(){
   $('#viewKoalas').on('click', '.deleteKoala', koalaDeleter);
   $('#viewKoalas').on('click', '.transfer', koalaTransfer);
   $('#changeDisplay').on('click', displayChange);
+  $('#viewKoalas').on('click', '.editKoala', editKoala);
+  $('#viewKoalas').on('click', '.saveKoalaNote', saveKoalaNote);
+  
   displayChange();
   $( '#addButton' ).on( 'click', function(event){
     event.preventDefault();
@@ -83,7 +86,7 @@ function koalaDisplay(koalaArray){
     stringToAppend += `<td>${koala.age}</td>`;
     stringToAppend += `<td>${koala.gender}</td>`;
     stringToAppend += `<td>${koala.transfer}</td>`;
-    stringToAppend += `<td>${koala.notes}</td>`;
+    stringToAppend += `<td data-id="${koala.id}" id="${koala.id}">${koala.notes}<button type="button" data-note="${koala.notes}" data-id="${koala.id}" class="editKoala">Edit</button></td>`;
     stringToAppend += `<td>${moveKoala(koala.transfer, koala.id)}</td>`
     stringToAppend += `<td><button type="button" data-id="${koala.id}" class="deleteKoala">Delete</button></td>`
     stringToAppend += `</tr>`;
@@ -148,4 +151,33 @@ function displayChange(){
   } else if($('#displaySelect').val()=='non-transferable'){
     getNonTransferables();
   }
+}
+
+function editKoala(){
+  let id = $(this).data('id');
+  let note = $(this).data('note');
+  let stringToAppend = '';
+  $(`#${id}`).empty();
+  stringToAppend += `<input type="text" id="editNote" value="${note}" placeholder="Notes">`
+  stringToAppend += `<button type="button" data-id="${id}" class="saveKoalaNote">Save</button>`
+  $(`#${id}`).append(stringToAppend);
+}
+
+function saveKoalaNote(){
+  console.log('Click!');
+  let id = $(this).data('id');
+  let note = $('#editNote').val();
+  $.ajax({
+    type: 'put',
+    url: '/koalas/edit',
+    data: {
+      id: id,
+      note: note
+  }
+  }).done(function(data){
+    console.log('Edit this koala note:', data);
+    displayChange();
+  }).fail(function(error){
+    console.log(error)
+  }); //end ajax
 }
