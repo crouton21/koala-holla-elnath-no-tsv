@@ -8,12 +8,14 @@
     <link rel="stylesheet" href="styles/style.css">
   </head>
   <body>
+    <div id="header">
     <img src="images/icon.png" />
     <h1>Koala Holla</h1>
     <h2>1976 Llama Comma Drive</h2>
-    <h2>Walla Walla, WA</h2>
+    <h2 id="address">Walla Walla, WA</h2>
+    </div>
     <div id="addKoala">
-      <h2>Add Koala</h2>
+      <h3>Add Koala</h3>
       <form>
         <input type="text" id="nameIn" value="" placeholder="Name">
         <input type="text" id="ageIn" value="" placeholder="Age">
@@ -21,6 +23,7 @@
           <option value="Female">Female</option>
           <option value="Male">Male</option>
         </select>
+        Transferable:
         <select name="" id="transferIn">
           <option value="true">Yes</option>
           <option value="false">No</option>
@@ -36,7 +39,7 @@
       <button type="button" id="changeDisplay">Change Display</button>
     </div>
     <div>
-      <h2>All Koalas</h2>
+      <h3>All Koalas</h3>
       <table>
         <thead>
           <tr>
